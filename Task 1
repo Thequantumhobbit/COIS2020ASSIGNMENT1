@@ -7,26 +7,75 @@ using System.Threading.Tasks;
 public class Term:IComparable 
 {
 private double coefficient;
-private interger exponent;
+private integer exponent;
 
 // Creates a term with the given coefficient and exponent
 public Term(double coefficient, interger exponent) 
 {
-\\ We need to code this
+
+this.coefficient = coeifficient;
+this.exponent = exponent; 
+
 }
 
 //Evaluates the current term at x
-pubilc double Evaluate (double x) 
+public double Evaluate (double x) 
 {
-// We need to code this
+private void Poly(int exponent)
+        {
+            if (exponent <0)
+            {
+                 throw new ArgumentException("Exponent is less than 0");
+
+
+                 }
+                 if ( exponent >99)
+            {
+            throw new ArugumentException("Exponent is greater than 99");
+            }
+            
+           
 }
+              
 
 // Returns -1,0, or 1 if the exponent of the current term is less than, equal to, or greater than the exponent of obj
-public override string ToString()
+
+public int CompareTo (Object obj)
 {
-// We need to code this
+
+obj.exponent = x;
+term.exponent = y;
+
+if (y,x)
+{
+return -1;
 }
 
-// Implement read and write properties for each data member 
-// The set property of the exponent should throw an argumentOutOfRangeException if the exponent parameter of teh construtor is less than o or greater than 99
+if (y = x)
+{
+return 0;
 }
+if (y>x)
+{
+return 1;
+}
+
+}
+
+public override string ToString()
+{
+return coefficiant.ToString() + "x^"+ exponent.ToString();
+}
+
+
+        }
+
+// Implement read and write properties for each data member 
+
+public int Coefficiant { get; set; }   
+public int Exponent { get; set; }
+
+
+// The set property of the exponent should throw an argumentOutOfRangeException if the exponent parameter of the construtor is less than o or greater than 99
+}
+
