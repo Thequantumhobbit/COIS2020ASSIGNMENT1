@@ -1,0 +1,32 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+public class Term:IComparable 
+{
+private double coefficient;
+private interger exponent;
+
+// Creates a term with the given coefficient and exponent
+public Term(double coefficient, interger exponent) 
+{
+\\ We need to code this
+}
+
+//Evaluates the current term at x
+pubilc double Evaluate (double x) 
+{
+// We need to code this
+}
+
+// Returns -1,0, or 1 if the exponent of the current term is less than, equal to, or greater than the exponent of obj
+public override string ToString()
+{
+// We need to code this
+}
+
+// Implement read and write properties for each data member 
+// The set property of the exponent should throw an argumentOutOfRangeException if the exponent parameter of teh construtor is less than o or greater than 99
+}
