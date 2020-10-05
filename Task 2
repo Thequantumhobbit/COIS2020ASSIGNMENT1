@@ -1,0 +1,55 @@
+public class Node<T>
+{
+Public T Item {get;set;}
+Public Note<T> Next; {get;set}
+
+public Node (T item, Node<T> next)
+{
+// We need to code this}
+}
+
+public class Polynomial 
+{
+
+// A reference to the first node of a singly linked list 
+private Node<Term>front;
+
+// Creates the polynomial 0
+public Polynomial ()
+{
+\\ We have to code this 
+}
+
+//Inserts term t into the current polynomial in its proper order if a term with the same exponent already exisits then the two terms are added together
+public void AddTerm (Term t) 
+{
+\\ We have to code this 
+}
+
+//Adds polynomials p and q to yield a new polynomial 
+public static Polynomial operator + (Polynomial p, Polynomial q 
+{
+// We have to code this 
+}
+
+// Multiplies polynomials p and q to yeild a new polynomial 
+public static Polynomial operator * (Polynomial p, Polynomial q) 
+{
+// We need to code this
+}
+
+// Evaluates the current polynomial at x 
+public double Evaluate (double x) 
+{
+// We need to code this
+}
+
+// Prints current polynomial 
+public void Print()
+{
+// We need to code this
+}
+
+}
+
+
