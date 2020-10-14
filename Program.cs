@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
 using Task_2;
 
 namespace COIS2020Assignment1
@@ -10,31 +8,31 @@ namespace COIS2020Assignment1
         static void Main(string[] args)
         {
 
-         
+
 
             Console.WriteLine("Please enter the coefficent for the first term in the polynomial");
             double coeff = Convert.ToDouble(Console.ReadLine());
 
             Console.WriteLine("Please enter the exponent for the first term in the polynmial");
-           int exp =Convert.ToInt32( Console.ReadLine());
+            int exp = Convert.ToInt32(Console.ReadLine());
 
             Term Term1 = new Term(coeff, exp);
-           
+
 
             Console.WriteLine("Please enter the value at which you would like your polynomail evaluated at");
             double y = Convert.ToDouble(Console.ReadLine());
 
-           Console.WriteLine( Term1.Evaluate(y));
+            Console.WriteLine(Term1.Evaluate(y));
 
-            Console.WriteLine("The current term in the polynomial is" + Term1.ToString());
-
-
+            Console.WriteLine("The current term in the polynomial is: " + Term1.ToString());
 
 
-         
 
 
-            
+
+
+
+
 
 
 
@@ -64,23 +62,25 @@ namespace Task_2
             Exponent = exponent;
 
             // Put the argument out of range exception below 
-             if (Exponent <0)
-             {
-                throw new ArgumentOutOfRangeException("The expoenent entered was negative");
-
-             }
-            if (Exponent > 99)
+            if (Exponent < 0)
             {
-                throw new ArgumentOutOfRangeException("The expoenent entered was to large");
+                Console.WriteLine("The exponent you entered was negative, it has been changed to 0.");
+                Exponent = 0;
 
             }
-            else
+            else if (Exponent > 99)
             {
+                Console.WriteLine("The exponent you entered was too large, it has been changed to 99.");
+                Exponent = 99;
 
-                Console.WriteLine("This is what has made it to the class Term");
-                Console.WriteLine(Coefficient);
-                Console.WriteLine(Exponent);
             }
+
+
+            Console.WriteLine("\n");
+            Console.WriteLine("This is what has made it to the class Term");
+                Console.WriteLine("Coefficient: {0}",Coefficient);
+                Console.WriteLine("Exponent: {0} ",Exponent);
+            
 
         }
         public double Evaluate(double x)  //Evaluates the current term at x which is a user inputted value sent down from the main program
@@ -93,17 +93,16 @@ namespace Task_2
 
         }
 
-       /* public int CompareTo(Object obj) // Returns -1,0, or 1 if the exponent of the current term is less than, equal to, or greater than the exponent of obj
-        {
-
-
-        }
-        */
+        /* public int CompareTo(Object obj) // Returns -1,0, or 1 if the exponent of the current term is less than, equal to, or greater than the exponent of obj
+         {
+         }
+         */
 
         public override string ToString()
         {
 
-            return Coefficient + "x^" + Exponent;
+            object y = this.Atx;
+            return Coefficient + "(" + y + ")" + "^" + Exponent;
 
         }
     }
@@ -115,20 +114,15 @@ public class Node<T>
     {
         public T Item { get; set; }
         public Node<T> Next; {get;set;}
-
     public Node(T item, Node<T> next)
     {
         Item = item;
         Next = item.next;
-
     }
-
     public class Polynomial
     {
-
         // A reference to the first node of a singly linked list 
         private Node<Term> front;
-
         // Creates the polynomial 
         public Polynomial()
         {
@@ -136,18 +130,14 @@ public class Node<T>
             {
                 Poly(0, 1);
             }
-
             public Polynomial(double coefficient)              // One parameter
             {
                 Poly(coefficient, 1);
             }
-
             public Polynomial (double coefficiant, int exponent)    // Denominator
             {
                 Poly(coefficiant, exponent);
             }
-
-
             private void Poly(double coefficiant, int exponent)
             {
                 if ((0 >= exponent) && (exponent <= 99))
@@ -160,15 +150,12 @@ public class Node<T>
                 {
                     throw new ArgumentException("Denominator is 0");
                 }
-
             }
-
             //Inserts term t into the current polynomial in its proper order, if a term with the same exponent already exisits then the two terms are added together
             public void AddTerm(Term t)
             {
 \\ We have to code this
             }
-
 //Adds polynomials p and q to yield a new polynomial 
         public static Polynomial operator +(Polynomial p, Polynomial q 
 {
@@ -180,17 +167,14 @@ public class Node<T>
     {
         // We need to code this
     }
-
     // Evaluates the current polynomial at x 
     public double Evaluate(double x)
     {
         // We need to code this
     }
-
     // Prints current polynomial 
     public void Print()
     {
         // We need to code this
     }
-
     */
