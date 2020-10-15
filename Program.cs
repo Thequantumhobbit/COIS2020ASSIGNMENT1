@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
+using System;
+//using System.Collections.Generic;
+//using System.Data;
 using TermCreation;
-using Task3; 
+using Task3;
 
 namespace COIS2020Assignment1
 {
@@ -11,36 +11,65 @@ namespace COIS2020Assignment1
         static void Main(string[] args)
         {
 
-         
+
 
             Console.WriteLine("Please enter the coefficent for the first term in the polynomial");
             double coeff = Convert.ToDouble(Console.ReadLine());
 
+            Console.WriteLine("\n");
             Console.WriteLine("Please enter the exponent for the first term in the polynmial");
-           int exp =Convert.ToInt32( Console.ReadLine());
+            int exp = Convert.ToInt32(Console.ReadLine());
 
             Term Term1 = new Term(coeff, exp);
-           
 
+            Console.WriteLine("\n");
             Console.WriteLine("Please enter the value at which you would like your polynomail evaluated at");
             double y = Convert.ToDouble(Console.ReadLine());
-
-           Console.WriteLine( Term1.Evaluate(y));
-
-            Console.WriteLine("The current term in the polynomial is" + Term1.ToString());
-
-            Polynomial Poly1 = new Polynomial();
-
-
-
-
-
-         
 
 
             
 
+            Console.WriteLine("The current term in the polynomial is: " + Term1.ToString());
 
+            
+            Console.WriteLine("This term evaluates to: "+Term1.Evaluate(y));
+
+            Term test2 = new Term(2.2, 2);
+            Term test1 = new Term(1.1, 1);
+            Term test3 = new Term(3.3, 3);
+
+            
+
+            Polynomial Poly1 = new Polynomial();
+
+            
+
+           Poly1.AddTerm(test2);
+           Poly1.AddTerm(test1);
+           Poly1.AddTerm(test3);
+
+           
+
+
+           
+
+            Term test4 = new Term(4.4, 4);
+
+            Poly1.AddTerm(test4);
+
+            
+
+
+            for (int i = 0; i <= Poly1.GetCount(); i++)
+                {
+                 
+                    Console.Write(Poly1.GetIndex(i));
+               if(i!=Poly1.GetCount())
+                {
+                    Console.Write(" + ");
+                }
+
+                }
 
         }
     }
@@ -59,9 +88,27 @@ namespace TermCreation
     {
         private double Coefficient { get; set; }
         private double Atx;
-        private int Exponent { get; set; }
+        private int Exponent;
 
+        public int GetExpo()
+        {
+            return Exponent;
+        }
 
+        public void SetExpo(int expo)
+        {
+            Exponent = expo;
+        }
+
+        public double GetCoeff()
+        {
+            return Coefficient;
+        }
+
+        public void SetCoeff(double coeff)
+        {
+            Coefficient = coeff;
+        }
         // Creates a term with the given coefficient and exponent
         public Term(double coefficient, int exponent)
         {
@@ -69,23 +116,24 @@ namespace TermCreation
             Exponent = exponent;
 
             // Put the argument out of range exception below 
-             if (Exponent <0)
-             {
-                throw new ArgumentOutOfRangeException("The expoenent entered was negative");
-
-             }
-            if (Exponent > 99)
+            if (Exponent < 0)
             {
-                throw new ArgumentOutOfRangeException("The expoenent entered was to large");
+                Console.WriteLine("The exponent you entered was negative, it has been changed to 0.");
+                Exponent = 0;
 
             }
-            else
+            else if (Exponent > 99)
             {
+                Console.WriteLine("The exponent you entered was too large, it has been changed to 99.");
+                Exponent = 99;
 
-                Console.WriteLine("This is what has made it to the class Term");
-                Console.WriteLine(Coefficient);
-                Console.WriteLine(Exponent);
             }
+
+            Console.WriteLine("\n");
+            Console.WriteLine("This is what has made it to the class Term");
+            Console.WriteLine("Coefficient: {0}", Coefficient);
+            Console.WriteLine("Exponent: {0} ", Exponent);
+
 
         }
         public double Evaluate(double x)  //Evaluates the current term at x which is a user inputted value sent down from the main program
@@ -98,13 +146,13 @@ namespace TermCreation
 
         }
 
-       public int CompareTo(Object obj) // Returns -1,0, or 1 if the exponent of the current term is less than, equal to, or greater than the exponent of obj
+        public int CompareTo(Object obj) // Returns -1,0, or 1 if the exponent of the current term is less than, equal to, or greater than the exponent of obj
         {
 
             Term f = obj as Term;
             if (Exponent < f.Exponent)
             {
-                return -1; 
+                return -1;
             }
             if (Exponent == f.Exponent)
             {
@@ -122,13 +170,13 @@ namespace TermCreation
 
 
         }
-        
+
 
         public override string ToString()
         {
 
-            return Coefficient + "x^" + Exponent;
-
+           // double y = this.Atx;
+            return Coefficient + "x" + "^" + Exponent;
         }
     }
 }
@@ -155,37 +203,100 @@ namespace Task3
 
     public class Polynomial
     {
-        private int capacity;          // Maximum number of items in a list
-        private int count;             // Number of items in the list
+       // private int capacity;          // Maximum number of items in a list
+        private int count; // Number of items in the list
+        private int next = 0;
         private Term[] P;            // Array of items 
-                                     // Items are stored beginning at position 0
+                    // Items are stored beginning at position 0
 
-        public Polynomial(int size) // Creates the polynomial array 
+        public Polynomial() // Creates the polynomial array 
         {
-            capacity = size;
+           P = new Term[50];
+            
             count = 0;
-            P = new Term[size];
 
-            P[0] = Term(0.0, 0); 
+
+            P[0] = new Term(0.0, 0);
+            next++;
+            
         }
 
-        public Polynomial() : this(100) { } // Creates the array if a size is not given 
+       
 
-        public void AddTerm(Term item, int p) // Add a term to the polynomial 
+        public int GetCount()
         {
-            int i;
-            if (count < capacity && (p >= 0 && p <= count))
-            {
-                // Shift items from A[p..count-1] up one position
-
-                for (i = count - 1; i >= p; i--)
-                {
-                    P[i + 1] = P[i];
-                }
-                P[p] = item;
-                count++;
-            }
+            return count;
         }
+
+        public Term GetIndex(int index)
+        {
+            return P[index];
+        }
+
+        public void Grow(int newsize)
+        {
+            Array.Resize(ref P, newsize);
+        }
+
+
+
+        public void AddTerm(Term term)
+        {
+            /*
+            if(next>=P.Length)
+            {
+                int g = P.Length * 2;
+                Grow(g);
+            }
+            */
+            
+
+            P[next] = term;
+            next++;
+            count++;
+
+            
+            int i = count;
+            int j = i-1;
+            Term current = P[i];
+            Term after = P[j];
+
+            
+
+            while (j!=-1)
+            {
+                
+                current = P[i];
+                after = P[j];
+
+                if (current.GetExpo() > after.GetExpo())
+                {
+                    
+                    int temp = current.GetExpo();
+                    current.SetExpo(after.GetExpo());
+                    after.SetExpo(temp);
+
+                    double temp2 = current.GetCoeff();
+                    current.SetCoeff(after.GetCoeff());
+                    after.SetCoeff(temp2);
+
+                    
+                   
+
+                }
+
+                    i--;
+                    j--;
+
+                   
+                }
+
+                
+
+            
+
+        }
+
     }
 
 }
@@ -196,59 +307,47 @@ public class Node<T>
 {
     public T Item { get; set; }
     public Node<T> Next { get; set; }
-
     public Node(T item, Node<T> next)
     {
         Item = item;
         Next = next;
-
     }
 }
-
-
     public class Polynomial
     {
-
         // A reference to the first node of a singly linked list 
         private Node<Term> front;
-
-
     // Creates the polynomial 
     public Polynomial()
     {
-
     }
     */
 
-    /*
-            //Inserts term t into the current polynomial in its proper order, if a term with the same exponent already exisits then the two terms are added together
-            public void AddTerm(Term t)
-            {
+/*
+        //Inserts term t into the current polynomial in its proper order, if a term with the same exponent already exisits then the two terms are added together
+        public void AddTerm(Term t)
+        {
 \\ We have to code this
-            }
-
+        }
 //Adds polynomials p and q to yield a new polynomial 
-        public static Polynomial operator +(Polynomial p, Polynomial q 
+    public static Polynomial operator +(Polynomial p, Polynomial q 
 {
 // We have to code this 
 }
-    /*
-    // Multiplies polynomials p and q to yeild a new polynomial 
-    public static Polynomial operator *(Polynomial p, Polynomial q)
-    {
-        // We need to code this
-    }
-
-    // Evaluates the current polynomial at x 
-    public double Evaluate(double x)
-    {
-        // We need to code this
-    }
-
-    // Prints current polynomial 
-    public void Print()
-    {
-        // We need to code this
-    }
-
-    */
+/*
+// Multiplies polynomials p and q to yeild a new polynomial 
+public static Polynomial operator *(Polynomial p, Polynomial q)
+{
+    // We need to code this
+}
+// Evaluates the current polynomial at x 
+public double Evaluate(double x)
+{
+    // We need to code this
+}
+// Prints current polynomial 
+public void Print()
+{
+    // We need to code this
+}
+*/
