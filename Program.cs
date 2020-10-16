@@ -1,6 +1,8 @@
 using System;
-//using System.Collections.Generic;
+using System.Collections.Generic;
 //using System.Data;
+//using System.Array;
+//using System.Collections.ilist;
 using TermCreation;
 using Task3;
 
@@ -34,7 +36,7 @@ namespace COIS2020Assignment1
             
             Console.WriteLine("This term evaluates to: "+Term1.Evaluate(y));
 
-            Term test2 = new Term(2.2, 2);
+            Term test2 = new Term(-2.2, 2);
             Term test1 = new Term(1.1, 1);
             Term test3 = new Term(3.3, 3);
 
@@ -59,17 +61,47 @@ namespace COIS2020Assignment1
 
             
 
+            Poly1.Print();
 
-            for (int i = 0; i <= Poly1.GetCount(); i++)
-                {
-                 
-                    Console.Write(Poly1.GetIndex(i));
-               if(i!=Poly1.GetCount())
-                {
-                    Console.Write(" + ");
-                }
 
-                }
+            Console.WriteLine("\n");
+            Console.WriteLine("Please enter the value at which you would like to be evaluate with");
+            double z = Convert.ToDouble(Console.ReadLine());
+
+
+
+            Console.WriteLine("This term evaluates to: " + Poly1.Evaluate(z));
+
+
+
+            Console.WriteLine("\n");
+            Console.WriteLine("\n");
+
+
+
+            Term addtest1 = new Term(5.5, 5);
+            Term addtest2= new Term(6.6, 6);
+            Term addtest3 = new Term(1.5, 2);
+
+
+
+            Polynomial Poly2 = new Polynomial();
+
+
+
+            Poly2.AddTerm(addtest2);
+            Poly2.AddTerm(addtest1);
+            Poly2.AddTerm(addtest3);
+
+            Console.WriteLine("\n");
+            Console.WriteLine("\n");
+
+            Poly2.Print();
+
+            Polynomial Poly3 = new Polynomial();
+            Poly3 = Poly1 + Poly2;
+
+            Poly3.Print();
 
         }
     }
@@ -129,10 +161,10 @@ namespace TermCreation
 
             }
 
-            Console.WriteLine("\n");
-            Console.WriteLine("This is what has made it to the class Term");
-            Console.WriteLine("Coefficient: {0}", Coefficient);
-            Console.WriteLine("Exponent: {0} ", Exponent);
+            
+            Console.WriteLine("This is the new term you created: "+ Coefficient + "x" + "^" + Exponent);
+            
+
 
 
         }
@@ -285,6 +317,31 @@ namespace Task3
 
                 }
 
+                ////////////////////
+                
+                 if (current.GetExpo() == after.GetExpo())
+                {
+
+                    double temp1 = after.GetCoeff();
+                    double temp2 = current.GetCoeff();
+                    double temp3 = temp1 + temp2;
+                    after.SetCoeff(temp3);
+
+                   for (int k = i; k<count-1;k++)
+                    {
+                        P[k] = P[k + 1];
+                       
+                    }
+
+                       
+
+
+                }
+
+                else
+                
+                //////////////////
+
                     i--;
                     j--;
 
@@ -296,6 +353,70 @@ namespace Task3
             
 
         }
+
+
+        public static Polynomial operator +(Polynomial p, Polynomial q)
+        {
+             Polynomial hold=new Polynomial();
+
+            for (int i=0; i<= p.GetCount();i++)
+            {
+                Term temp = new Term(p.P[i].GetCoeff(), p.P[i].GetExpo());
+
+                hold.AddTerm(temp);
+            }
+
+            for (int i = 0; i <= q.GetCount(); i++)
+            {
+                Term temp = new Term(q.P[i].GetCoeff(), q.P[i].GetExpo());
+
+                hold.AddTerm(temp);
+            }
+
+            return hold;
+        }
+
+
+
+        public double Evaluate(double x)
+        {
+            double answer=0;
+
+
+            for (int i = 0; i <= count; i++)
+            {
+
+               
+                Double termans = Math.Pow(x, P[i].GetExpo()) * P[i].GetCoeff();
+                answer += termans;
+            }
+            
+
+
+
+            return answer;
+        }
+
+
+        public void Print()
+        {
+
+            for (int i = 0; i <= count; i++)
+            {
+                if (P[i].GetCoeff() != 0)
+                {
+                    Console.Write(P[i]);
+
+                    if ((i != count)&& (P[i+1].GetCoeff() != 0))
+                    {
+                        Console.Write(" + ");
+                    }
+                }
+
+            }
+
+        }
+           
 
     }
 
