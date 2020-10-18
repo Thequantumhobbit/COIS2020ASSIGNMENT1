@@ -100,34 +100,13 @@ namespace COIS2020Assignment1
 
             Poly3.Print(); // print out poly 3
 
-            /*
-
+        
             Console.WriteLine("\n");
+            Polynomial Poly4 = new Polynomial(); // create a new polynomial to hold the multiplication of poly1 and poly 2 
 
-            Polynomial Poly4 = new Polynomial();
-            Polynomial Poly5 = new Polynomial();
-            Polynomial Poly6 = new Polynomial();
-
-            Term multiplytest1 = new Term(5.0, 2);
-            Term multiplytest2 = new Term(1.0, 4);
-            Term multiplytest3 = new Term(3.0, 3);
-            Term multiplytest4 = new Term(3.0, 2);
-
-            Poly5.AddTerm(multiplytest1);
-            Poly5.AddTerm(multiplytest2);
-
-            Poly5.Print();
-            Console.WriteLine("\n");
-
-            Poly6.AddTerm(multiplytest3);
-            Poly6.AddTerm(multiplytest4);
-
-            Poly6.Print();
-            Console.WriteLine("\n");
-
-            Poly4 = Poly5 * Poly6;
+            Poly4 = Poly1 * Poly2; 
             Poly4.Print();
-            */
+            
 
         }
     }
@@ -174,13 +153,13 @@ namespace TermCreation
             Exponent = exponent;
 
             
-            if (Exponent < 0)// Argument out of range work around 
+            if (Exponent < 0)// Argument out of range work around, checks to see if the exponent is below zero 
             {
                 Console.WriteLine("The exponent you entered was negative, it has been changed to 0.");
                 Exponent = 0;
 
             }
-            else if (Exponent > 99)
+            else if (Exponent > 99) //  check to see if it is above zero 
             {
                 Console.WriteLine("The exponent you entered was too large, it has been changed to 99.");
                 Exponent = 99;
@@ -188,7 +167,8 @@ namespace TermCreation
             }
 
 
-            Console.WriteLine("This is the new term you created: " + Coefficient + "x" + "^" + Exponent);
+           // Console.WriteLine("This is the new term you created: " + Coefficient + "x" + "^" + Exponent);
+       
 
         }
         public double Evaluate(double x)  //Evaluates the current term at x which is a user inputted value sent down from the main program
@@ -227,7 +207,7 @@ namespace TermCreation
         }
 
 
-        public override string ToString()
+        public override string ToString() //  this method prints out the terms
         {
 
             // double y = this.Atx;
@@ -267,35 +247,31 @@ namespace Task3
         public Polynomial() // Creates the polynomial array 
         {
             P = new Term[50];
+            count = 0; //  set count for the array equal to zero 
 
-            count = 0;
-
-
-            P[0] = new Term(0.0, 0);
-            next++;
+            P[0] = new Term(0.0, 0); //  add a zero term to position zero in the array 
+            next++; // increase next by 1
 
         }
 
-
-
-        public int GetCount()
+        public int GetCount() 
         {
             return count;
         }
 
-        public Term GetIndex(int index)
+        public Term GetIndex(int index) // get index returns that point in the array that the computer is currently at 
         {
             return P[index];
         }
 
-        public void Grow(int newsize)
+        public void Grow(int newsize) // rezises the array 
         {
             Array.Resize(ref P, newsize);
         }
 
 
 
-        public void AddTerm(Term term)
+        public void AddTerm(Term term) // add terms to the array 
         {
             /*
             if(next>=P.Length)
@@ -306,7 +282,7 @@ namespace Task3
             */
 
 
-            P[next] = term;
+            P[next] = term; // add term to the next open spot in the array 
             next++;
             count++;
 
@@ -318,13 +294,13 @@ namespace Task3
 
 
 
-            while (j != -1)
+            while (j != -1) // this while loop sorts the array. Starts at the end of the array and moves down to postisiton 0 
             {
 
                 current = P[i];
                 after = P[j];
 
-                if (current.GetExpo() > after.GetExpo())
+                if (current.GetExpo() > after.GetExpo()) //  if the exponent of one term is greater than the other the terms get shifted 
                 {
 
                     int temp = current.GetExpo();
@@ -335,14 +311,9 @@ namespace Task3
                     current.SetCoeff(after.GetCoeff());
                     after.SetCoeff(temp2);
 
-
-
-
                 }
 
-                ////////////////////
-
-                if (current.GetExpo() == after.GetExpo())
+                if (current.GetExpo() == after.GetExpo()) //  if the exponents are the same the two terms are added together 
                 {
 
                     double temp1 = after.GetCoeff();
@@ -356,33 +327,25 @@ namespace Task3
 
                     }
 
-
-
-
                 }
 
                 else
-
-                    //////////////////
+                {
 
                     i--;
-                j--;
-
+                    j--;
+                }
 
             }
-
-
-
-
 
         }
 
 
-        public static Polynomial operator +(Polynomial p, Polynomial q)
+        public static Polynomial operator +(Polynomial p, Polynomial q) // override the + operator for polynomials 
         {
             Polynomial hold = new Polynomial();
 
-            for (int i = 0; i <= p.GetCount(); i++)
+            for (int i = 0; i <= p.GetCount(); i++)  // these forloops ustailze the addterm method to add the terms together if they have same exponenet or to add the term to the new poly 
             {
                 Term temp = new Term(p.P[i].GetCoeff(), p.P[i].GetExpo());
 
@@ -401,7 +364,7 @@ namespace Task3
 
 
 
-        public double Evaluate(double x)
+        public double Evaluate(double x) // this method evalutes a polynomial at a user given input 
         {
             double answer = 0;
 
@@ -410,18 +373,14 @@ namespace Task3
             {
 
 
-                Double termans = Math.Pow(x, P[i].GetExpo()) * P[i].GetCoeff();
+                Double termans = Math.Pow(x, P[i].GetExpo()) * P[i].GetCoeff(); // uses math.pow to evalute the exponents 
                 answer += termans;
             }
-
-
-
-
             return answer;
         }
 
 
-        public static Polynomial operator *(Polynomial p, Polynomial q)
+        public static Polynomial operator *(Polynomial p, Polynomial q) // this method overrides the * operator 
         {
             Polynomial hold2 = new Polynomial();
             double tempC = 0, coeffp = 0, coeffq = 0;
@@ -466,11 +425,6 @@ namespace Task3
                     hold2.P[m].SetCoeff((hold2.P[m].GetCoeff()) / 2);
                 }
 
-
-
-
-
-
                 m--;
             } while (zero == 0);
 
@@ -480,7 +434,7 @@ namespace Task3
         }
 
 
-        public void Print()
+        public void Print() // this method prints out the polynomial 
         {
 
             for (int i = 0; i <= count; i++)
@@ -523,7 +477,7 @@ namespace NodeClass // New namespace for all node classes
     }
     // -------------------------------------------------
 
-    public class Node<Term> 
+    public class Node<Term> // create the node class 
     {
         public Term Item { get; set; }
         public Node<Term> Next { get; set; }
@@ -538,7 +492,7 @@ namespace NodeClass // New namespace for all node classes
             Next = next;
         }
     }
-    public class Polynomial<Term> : IList <Term> 
+    public class Polynomial<Term> : IList <Term>  // create the polynomial class 
     {
        
         private Node<Term> head; // Reference to the front of the list 
@@ -599,14 +553,14 @@ namespace NodeClass // New namespace for all node classes
             }
             Console.WriteLine();
         }
-        public void Insert(Term item, int p)
+        public void Insert(Term item, int p) //  used to insert a method 
         {
             int i;
             Node<Term> curr = head;
 
-            if (p >= 0 && p <= count)            // Is p correct (in bounds)?
+            if (p >= 0 && p <= count)           
             {
-                for (i = 0; i <= p - 1; i++)     // Move to penultimate node
+                for (i = 0; i <= p - 1; i++)     
                     curr = curr.Next;
 
                 curr.Next = new Node<Term>(item, curr.Next); 
@@ -616,7 +570,7 @@ namespace NodeClass // New namespace for all node classes
         }
 
         // Time complexity: O(n)
-        public void Remove(int p)
+        public void Remove(int p) //  this method removes a term 
         {
             int i;
             Node<Term> curr = head;
@@ -633,7 +587,7 @@ namespace NodeClass // New namespace for all node classes
         }
 
         // Time complexity: O(n)
-        public Term Retrieve(int p)
+        public Term Retrieve(int p) //  this method retrives a term 
         {
             int i;
             Node<Term> curr = head;
@@ -647,6 +601,48 @@ namespace NodeClass // New namespace for all node classes
             }
             else
                 return default(Term);
+        }
+
+    }
+
+    class Polynomials
+    {
+        private List<Polynomial> L;
+        // Creates an empty list L of polynomials
+        public Polynomials()
+        {
+            List<Polynomial> L = new List<Polynomial>();
+        }
+
+        // Retrieves the polynomial stored at position i in L
+        public Polynomial Retrieve(int i)
+        {
+            return (null);
+        }
+
+        // Inserts polynomial p into L
+        public void Insert(Polynomial p)
+        {
+            L.Add(p);
+        }
+
+        // Deletes the polynomial at index i
+        public void Delete(int i)
+        {
+            L.Remove(null);
+        }
+
+        // Returns the number of polynomials in L
+        public int Size()
+        {
+            int result = L.Count;
+            return result;
+        }
+
+        // Prints out the list of polynomials
+        public void Print()
+        {
+            L.ForEach(Console.WriteLine);
         }
 
     }
